@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "5LcHYkkJaz8puQGVSP9xtu1D4i6MYpuPF7AEECSLFST4hYWA3ag2HMZYnc0QC344tg8R24JIzrNUqM6eOJmWqw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Gigabyte\\Desktop\\Cwiczenia7\\Cwiczenia7\\Cwiczenia7.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gigabyte\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Gigabyte\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Gigabyte\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Gigabyte\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Gigabyte\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}
