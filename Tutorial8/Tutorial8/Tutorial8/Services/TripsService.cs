@@ -12,7 +12,7 @@ public class TripsService : ITripsService
     public async Task<List<TripDTO>> GetTrips()
     {
         var trips = new List<TripDTO>();
-
+//zapytanie wyciaga z bazy danych liste wszystkich wycieczek dodatkowow wyciaga jeszcze nazwy kraju 
         const string sql = @"
             SELECT t.IdTrip,
                    t.Name,
@@ -41,7 +41,7 @@ public class TripsService : ITripsService
     public async Task<List<TripDTO>> GetTrips(int clientId)
     {
         var trips = new List<TripDTO>();
-
+//zapytanie wyciaga liste wycieczek dla danego klienta i dodatkowo wyciaga nazwe kraju 
         const string sql = @"
             SELECT t.IdTrip,
                    t.Name,
@@ -95,7 +95,7 @@ public class TripsService : ITripsService
     public async Task<int> AddClient(ClientDTO client)
     {
         int newClientId;
-
+//zapytanie dodaje nowego klienta do bazy danych 
         string command = @"
         INSERT INTO Client (FirstName, LastName, Email, Telephone, Pesel)
         OUTPUT INSERTED.IdClient
@@ -123,12 +123,14 @@ public class TripsService : ITripsService
         using var conn = new SqlConnection(_connectionString);
         await conn.OpenAsync();
 
+        //zapytanie sprawdza czy dany klient istnieje w bazie danych 
         var checkClient = new SqlCommand(
             "SELECT 1 FROM Client WHERE IdClient = @cid", conn);
         checkClient.Parameters.AddWithValue("@cid", clientId);
         if (await checkClient.ExecuteScalarAsync() is null)
             return false;
 
+        //pobiera maksymalna liczbe uczestnikow dla okreslonej wcieczki 
         var checkTrip = new SqlCommand(
             "SELECT MaxPeople FROM Trip WHERE IdTrip = @tid", conn);
         checkTrip.Parameters.AddWithValue("@tid", tripId);
@@ -137,6 +139,7 @@ public class TripsService : ITripsService
             return false;
         int maxPeople = (int)maxPeopleObj;
 
+        //zapytanie sprawdza czy klient nie jest juz zapisany na dana wycieczke 
         var dup = new SqlCommand(
             "SELECT 1 FROM Client_Trip WHERE IdClient=@cid AND IdTrip=@tid", conn);
         dup.Parameters.AddWithValue("@cid", clientId);
@@ -144,13 +147,14 @@ public class TripsService : ITripsService
         if (await dup.ExecuteScalarAsync() is not null)
             return false;
 
+        //zapytanie sprawdza ile osob jest juz zapisanych na dana wycieczke 
         var cnt = new SqlCommand(
             "SELECT COUNT(*) FROM Client_Trip WHERE IdTrip=@tid", conn);
         cnt.Parameters.AddWithValue("@tid", tripId);
         int current = (int)await cnt.ExecuteScalarAsync();
         if (current >= maxPeople)
             return false;
-
+//zapytanie przypisuje wycieczke do klienta 
         var insert = new SqlCommand(
             "INSERT INTO Client_Trip (IdClient, IdTrip, RegisteredAt) " +
             "VALUES (@cid, @tid, CONVERT(int, GETDATE()))", conn);
@@ -162,6 +166,7 @@ public class TripsService : ITripsService
 
     public async Task<bool> DeleteClientTrip(int clientId, int tripId)
     {
+        //zapytanie usuwa klienta z danej wycieczki
         string command = @"
         DELETE FROM Client_Trip 
         WHERE IdClient = @cid AND IdTrip = @tid;
